@@ -30,9 +30,13 @@ fn build_keystone() {
 fn main() {
     if cfg!(feature = "use-system-lib") {
         #[cfg(feature = "use-system-lib")]
-        pkg_config::find_library("keystone").expect("Could not find system keystone");
+        unsafe {
+            println!("cargo:rustc-link-search=native=C:/Users/<username>/Documents/Github/rwMem");
+            println!("cargo:rustc-link-lib=dylib=keystone");
+        }
     } else {
         #[cfg(feature = "build-from-src")]
         build_keystone();
     }
 }
+
